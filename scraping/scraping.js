@@ -202,6 +202,21 @@ async function get_scholarships() {
                 });
             };
 
+            const { title, organization } = await newPage.evaluate(() => {
+                // Get title text while ignoring the favorite button
+                const titleElement = document.querySelector('h1.opp-dtl__title--main');
+                const title = titleElement ? titleElement.childNodes[0].textContent.trim() : null;
+
+                // Get organization name from the anchor tag
+                const orgElement = document.querySelector('h2.opp-dtl__org-name a');
+                const organization = orgElement ? orgElement.textContent.trim() : null;
+
+                return { title, organization };
+            });
+
+            console.log('Title:', title);
+            console.log('Organization:', organization);
+
             // Usage
             const missionStatement = await getMissionStatement(newPage);
             const companyDescription = await getDescription(newPage);
@@ -209,6 +224,8 @@ async function get_scholarships() {
             console.log('Company Description:', companyDescription);
 
             let opp = {
+                title: title,
+                organization: organization,
                 location: locationText,
                 description: description,
                 causes: causesList,
