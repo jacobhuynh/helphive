@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import CircularProgress from "@mui/joy/CircularProgress";
 
 // Define volunteer type
 interface Volunteer {
@@ -8,15 +9,16 @@ interface Volunteer {
   hours: number;
 }
 
-// Image mapping for podium medals
+// Image paths for podium medals (now using public directory)
 const medalImages = [
-  "../assets/medal_1.png",
-  "../assets/medal_2.png",
-  "../assets/medal_3.png",
+  "/assets/medal_1.png",
+  "/assets/medal_2.png",
+  "/assets/medal_3.png",
 ];
 
 export default function Leaderboard() {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch leaderboard data
@@ -28,56 +30,86 @@ export default function Leaderboard() {
           (a: Volunteer, b: Volunteer) => b.hours - a.hours
         );
         setVolunteers(sortedVolunteers);
+        setLoading(false);
       })
       .catch((error) => console.error("Error fetching leaderboard:", error));
   }, []);
 
+  if (loading)
+    return (
+      <div className="min-h-screen p-8 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 text-gray-900">
+        {" "}
+        {/* Added text-gray-900 */}
+        <div
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16"
+          style={{
+            height: "75vh",
+            display: "flex",
+            justifyContent: "center",
+            justifyItems: "center",
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress size="lg" color="success" />
+        </div>
+      </div>
+    );
+
   return (
     <div className="mx-auto p-6 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 min-h-screen px-36">
-      <h2 className="text-3xl font-bold text-center mb-8">Leaderboard</h2>
+      <div className="mt-16">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-700">Leaderboard</h2>
 
-      {/* Top 3 Podium Display */}
-      <div className="flex justify-center gap-6 mb-12">
-        {volunteers.slice(0, 3).map((volunteer, index) => (
-          <div
-            key={volunteer._id}
-            className="flex flex-col items-center p-4 shadow-lg rounded-lg bg-white w-44 h-60"
-          >
-            <img
-              src={medalImages[index]}
-              alt={`Medal ${index + 1}`}
-              className="h-16 w-16 mb-4 object-contain"
-            />
-            <h3 className="text-lg font-semibold">{volunteer.username}</h3>
-            <p className="text-xl font-bold text-green-600">
-              {volunteer.hours} Hours
-            </p>
-          </div>
-        ))}
-      </div>
+        {/* Top 3 Podium Display - Reordered with flex */}
+        <div className="flex justify-center items-end gap-6 mb-12">
+          {volunteers.slice(0, 3).map((volunteer, index) => (
+            <div
+              key={volunteer._id}
+              className="flex flex-col items-center p-4 shadow-lg rounded-lg bg-white w-44 h-60"
+              style={{
+                // 1st place in center (order: 2), 2nd left (order: 1), 3rd right (order: 3)
+                order: index === 0 ? 2 : index === 1 ? 1 : 3,
+                // Adjust height for podium effect
+                height: `${index === 0 ? 240 : 200}px`
+              }}
+            >
+              <img
+                src={medalImages[index]}
+                alt={`Medal ${index + 1}`}
+                className="h-16 w-16 mb-4 object-contain"
+              />
+              <h3 className="text-lg font-semibold text-gray-700">{volunteer.username}</h3>
+              <p className="text-xl font-bold text-green-600">
+                {volunteer.hours} Hours
+              </p>
+            </div>
+          ))}
+        </div>
 
-      {/* Leaderboard Table */}
-      <div className=" shadow-lg rounded-lg p-6">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b-2">
-              <th className="p-3">Rank</th>
-              <th className="p-3">Username</th>
-              <th className="p-3 text-center">Hours Volunteered</th>
-            </tr>
-          </thead>
-          <tbody>
-            {volunteers.slice(3).map((volunteer, index) => (
-              <tr key={volunteer._id} className="border-b hover:bg-gray-100">
-                <td className="p-3 text-gray-700">{index + 4}</td>
-                <td className="p-3 font-semibold">{volunteer.username}</td>
-                <td className="p-3 text-center text-green-600 font-bold">
-                  {volunteer.hours}
-                </td>
+        {/* Leaderboard Table (unchanged) */}
+        <div className="shadow-lg rounded-lg p-6 bg-white">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b-2">
+                <th className="p-3 text-gray-700">Rank</th>
+                <th className="p-3 text-gray-700">Username</th>
+                <th className="p-3 text-center text-gray-700">Hours Volunteered</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {volunteers.slice(3).map((volunteer, index) => (
+                <tr key={volunteer._id} className="border-b hover:bg-gray-100">
+                  <td className="p-3 text-gray-700">{index + 4}</td>
+                  <td className="p-3 font-semibold text-gray-500">{volunteer.username}</td>
+                  <td className="p-3 text-center text-green-600 font-bold text-gray-700">
+                    {volunteer.hours}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
