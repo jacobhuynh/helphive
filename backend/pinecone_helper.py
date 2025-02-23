@@ -51,6 +51,8 @@ def update_pinecone(filepath):
             "id": str(id_count),
             "values": embedding,
             "metadata": {
+                "title": item.get("title", "N/A"),
+                "organization": item.get("organization", "N/A"),
                 "location": item.get("location", "N/A"),
                 "description": item.get("description", "N/A"),
                 "causes": item.get("causes") or [],
@@ -108,7 +110,7 @@ def pinecone_get_matches(json_data):
 def pinecone_get_match(id):
     response=index.query(
         namespace="helphive",
-        id=str(id),
+        id=id,
         top_k=1,
         include_values=True,
         include_metadata=True

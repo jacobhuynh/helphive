@@ -105,5 +105,5 @@ def add_volunteering(user_email: str, volunteer_id: str, db=Depends(get_db)):
     return mongo_add_volunteering(db, user_email, volunteer_id)
 
 @app.get("/get_match/{volunteer_id}")
-def get_volunteering(volunteer_id: str):
-    return pinecone_get_match(volunteer_id)
+def get_volunteering(volunteer_id: int):
+    return pinecone_get_match(str(volunteer_id))
