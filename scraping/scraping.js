@@ -232,7 +232,8 @@ async function get_scholarships() {
                 goodFor: goodFor,
                 skills: skills,
                 missionStatement: missionStatement,
-                organizationDescription: companyDescription
+                organizationDescription: companyDescription,
+                url: fullLink
             }
 
             volunteer_data.push(opp);
