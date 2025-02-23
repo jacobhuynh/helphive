@@ -31,9 +31,9 @@ def update_pinecone(filepath):
         if item['skills']:
             for skill in item['skills']:
                 data.append(skill)
-        if item['groups']:
-            for group in item['groups']:
-                data.append(groups)
+        if item['goodFor']:
+            for group in item['goodFor']:
+                data.append(group)
         
         data_string = ", ".join(data)
     
@@ -71,7 +71,7 @@ def update_pinecone(filepath):
         )
 
 # only need to run to update
-# update_pinecone("../scraping/volunteer_opportunities.json")
+update_pinecone("../scraping/volunteer_opportunities.json")
     
 def pinecone_get_matches(json_data):
     data = []
