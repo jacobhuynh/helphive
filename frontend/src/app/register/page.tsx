@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Down from "@/assets/down.svg";
 import { registerUser } from "@/api/register";
+import { useRouter } from "next/navigation";
 
 const causes = [
   "Advocacy & Human Rights",
@@ -161,6 +162,8 @@ export default function Register() {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userData = {
@@ -176,7 +179,11 @@ export default function Register() {
     };
     console.log("userData", userData);
     const result = await registerUser(userData);
-    console.log(result);
+    if (result && result.success) {
+      localStorage.setItem("userEmail", userData.email);
+      window.dispatchEvent(new Event("storage"));
+      router.push("/dashboard");
+    }
   };
 
   return (
