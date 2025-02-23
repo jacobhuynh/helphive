@@ -8,13 +8,13 @@ export function About() {
       id="mission"
       className="w-full min-h-screen bg-white py-24 flex justify-center items-center"
     >
-      <div className="container mx-auto px-4 md:px-16">
+      <div className="container mx-auto px-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300">
             <div className="absolute inset-0 flex items-center justify-center">
               <Image
                 src={Talk}
-                alt="People talking"
+                alt="Talk"
                 layout="fill"
                 objectFit="cover"
                 priority
@@ -23,9 +23,7 @@ export function About() {
           </div>
 
           <div className="space-y-12">
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900">
-              Our Mission
-            </h2>
+            <h2 className="text-6xl font-bold text-gray-900">Our Mission</h2>
 
             <div className="space-y-6">
               <p className="text-gray-600 text-lg">
