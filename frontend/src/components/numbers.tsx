@@ -18,22 +18,22 @@ export function Numbers() {
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
-              200+
+              1000+
             </div>
-            <p className="text-gray-600">up to date opportunities available.</p>
+            <p className="text-gray-600">up to date opportunities available</p>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
-              10,000+
+              {"< "}5
             </div>
-            <p className="text-gray-600">volunteer hours contributed.</p>
+            <p className="text-gray-600">seconds to match candidates</p>
           </div>
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
               95%
             </div>
-            <p className="text-gray-600">accuracy in matching volunteers.</p>
+            <p className="text-gray-600">accuracy in matching volunteers</p>
           </div>
         </div>
       </div>

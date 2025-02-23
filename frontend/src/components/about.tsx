@@ -53,25 +53,25 @@ export function About() {
               <div className="bg-gradient-to-br from-yellow-50 to-green-50 rounded-xl p-6 border border-emerald-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
                 <div className="flex items-center gap-2 text-green-600 mb-2">
                   <Users className="w-6 h-6" />
-                  <span className="text-3xl font-bold">1000+</span>
+                  <span className="text-3xl font-bold">All</span>
                 </div>
-                <p className="text-gray-600 text-sm">Volunteers Matched</p>
+                <p className="text-gray-600 text-sm">Age Groups Supported</p>
               </div>
 
               <div className="bg-gradient-to-br from-yellow-50 to-green-50 rounded-xl p-6 border border-emerald-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
                 <div className="flex items-center gap-2 text-green-600 mb-2">
                   <TreePine className="w-6 h-6" />
-                  <span className="text-3xl font-bold">100+</span>
+                  <span className="text-3xl font-bold">20+</span>
                 </div>
-                <p className="text-gray-600 text-sm">Active Projects</p>
+                <p className="text-gray-600 text-sm">Available Cities</p>
               </div>
 
               <div className="bg-gradient-to-br from-yellow-50 to-green-50 rounded-xl p-6 border border-emerald-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
                 <div className="flex items-center gap-2 text-green-600 mb-2">
                   <Award className="w-6 h-6" />
-                  <span className="text-3xl font-bold">15+</span>
+                  <span className="text-3xl font-bold">45+</span>
                 </div>
-                <p className="text-gray-600 text-sm">Impact Awards</p>
+                <p className="text-gray-600 text-sm">Skills Supported</p>
               </div>
             </div>
           </div>
