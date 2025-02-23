@@ -31,7 +31,6 @@ export default function Dashboard() {
     setEmail(storedEmail);
 
     const fetchData = async (userEmail: string) => {
-      // Fixed type to string only
       try {
         const encodedEmail = encodeURIComponent(userEmail);
         const response = await fetch(
@@ -54,7 +53,6 @@ export default function Dashboard() {
   }, []);
 
   async function addHours(id: string, hours: string) {
-    // Modified to accept ID and hours
     try {
       const numericHours = parseInt(hours, 10) || 0;
       await fetch(
@@ -72,7 +70,6 @@ export default function Dashboard() {
   }
 
   const handleComplete = async (id: string) => {
-    // Made async
     const opportunity = interestedOpportunities.find((item) => item.id === id);
     if (opportunity) {
       try {
@@ -89,7 +86,6 @@ export default function Dashboard() {
   };
 
   const handleHoursChange = (id: string, hours: string) => {
-    // Fixed type to string
     setInterestedOpportunities((prev) =>
       prev.map((item) => (item.id === id ? { ...item, hours } : item))
     );
@@ -99,7 +95,6 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen p-8 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 text-gray-900">
         {" "}
-        {/* Added text-gray-900 */}
         <div
           className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16"
           style={{
@@ -121,12 +116,9 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen p-8 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 text-gray-900">
       {" "}
-      {/* Added text-gray-900 */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16">
-        {/* Active Opportunities */}
         <div className="space-y-6 md:pr-12">
           <h2 className="text-lg font-semibold mb-6 text-gray-900">Active</h2>{" "}
-          {/* Added text color */}
           {interestedOpportunities
             .filter((item) => !item.completed)
             .map((item) => (
@@ -138,9 +130,7 @@ export default function Dashboard() {
                   <h3 className="font-medium text-lg text-gray-900">
                     {item.title}
                   </h3>{" "}
-                  {/* Dark text */}
                   <p className="text-sm text-gray-700">{item.location}</p>{" "}
-                  {/* Darker gray */}
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
@@ -185,7 +175,6 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold mb-6 text-gray-900">
             Completed
           </h2>{" "}
-          {/* Added text color */}
           {interestedOpportunities
             .filter((item) => item.completed)
             .map((item) => (
@@ -197,9 +186,7 @@ export default function Dashboard() {
                   <h3 className="font-medium text-lg text-gray-900">
                     {item.title}
                   </h3>{" "}
-                  {/* Dark text */}
                   <p className="text-sm text-gray-700">{item.location}</p>{" "}
-                  {/* Darker gray */}
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
