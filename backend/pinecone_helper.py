@@ -7,7 +7,7 @@ import os
 
 load_dotenv()
 
-openai_key = os.getenv("openai_key")
+openai_key = os.getenv("OPENAI_API_KEY")
 openai_client = OpenAI(api_key=openai_key)
 
 pinecone_key = os.getenv('pinecone_key')
@@ -22,15 +22,67 @@ def update_pinecone(filepath):
         json_data = json.load(file)
     
     vectors = []
+    id_count = 0
     for item in json_data:
-        # data = []
-        # for value in item.
+        data = []
+        if item['causes']:
+            for cause in item['causes']:
+                data.append(cause)
+        if item['skills']:
+            for skill in item['skills']:
+                data.append(skill)
+        if item['groups']:
+            for group in item['groups']:
+                data.append(groups)
+        
+        data_string = ", ".join(data)
+    
+        try:
+            response = openai_client.embeddings.create(
+                input=data_string,
+                model="text-embedding-3-small"
+            )
+            embedding = response.data[0].embedding
+        except Exception as e:
+            print(f"Error creating embedding for item {item['id']}")
+            continue
+        
+        vectors.append({
+            "id": str(id_count),
+            "values": embedding,
+            "metadata": {
+                "location": item.get("location", "N/A"),
+                "description": item.get("description", "N/A"),
+                "causes": item.get("causes") or [],
+                "groups": item.get("groups") or [],
+                "skills": item.get("skills") or [],
+                "missionStatement": item.get("missionStatement", "N/A"),
+                "organizationDescription": item.get("organizationDescription", "N/A")
+            }
+        })
+        id_count += 1
+    
+    for i in range(0, len(vectors), 20):
+        upsert_resposne = index.upsert(
+            vectors=vectors[i:i + 20],
+            namespace="helphive"
+        )
+
+# only need to run to update
+# update_pinecone("../scraping/volunteer_opportunities.json")
     
 def pinecone_get_matches(json_data):
-    data_arr = []
+    data = []
     
-    for interest in json_data.interests:
-        data_arr.append(str(interest))
+    if json_data['causes']:
+        for cause in json_data['causes']:
+            data.append(cause)
+    if json_data['skills']:
+        for skill in json_data['skills']:
+            data.append(skill)
+    if json_data['groups']:
+        for group in json_data['groups']:
+            data.append(group)
     
     data_string = ", ".join(data)
 
@@ -56,11 +108,10 @@ def pinecone_get_matches(json_data):
 def pinecone_get_match(id):
     response=index.query(
         namespace="helphive",
-        id=id,
+        id=str(id),
         top_k=1,
         include_values=True,
         include_metadata=True
     )
     
     return response.get("matches", [])[0].metadata
-    
