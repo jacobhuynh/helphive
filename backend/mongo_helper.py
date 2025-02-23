@@ -1,7 +1,7 @@
 import gridfs
 from pinecone_methods import *
 
-def signup(db, first_name, last_name, username, password, email, location, interests, extra):
+def mongo_signup(db, first_name, last_name, username, password, email, location, interests, extra):
     try:
         fs = gridfs.GridFS(db)
         
@@ -23,7 +23,7 @@ def signup(db, first_name, last_name, username, password, email, location, inter
     except Exception as e:
         return {"error": f"Error signing user up: {str(e)}"}
 
-def get_user(db, email):
+def mongo_get_user(db, email):
     try:
         result = db['user_data'].find_one({"email":email})
         
@@ -34,10 +34,23 @@ def get_user(db, email):
         return result
     except Exception as e:
         return {"error": f"Error retrieving user: {str(e)}"}
+    
+def mongo_update_hours(db, email, hours):
+    try:
+        result = db['user_data'].update_one(
+            {"email": email}, 
+            {"$inc": {"hours": hours}}
+        )
+        return result
+    except Exception as e:
+        return {"error": f"Error updating hours: {str(e)}"}
 
-def get_leaderboard(db):
+def mongo_get_leaderboard(db):
     try:
         result = db['user_data'].find().sort('hours', -1).limit(10)
         return result
     except Exception as e:
         return {"error": f"Error retrieving leaderboard: {str(e)}"}
+    
+def mongo_add_volunteering(db, email, hours):
+    try:
