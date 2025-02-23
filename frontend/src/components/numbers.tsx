@@ -17,7 +17,7 @@ export function Numbers() {
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {/* Opportunities Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center">
+          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
               200+
             </div>
@@ -25,7 +25,7 @@ export function Numbers() {
           </div>
 
           {/* Impact Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center">
+          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
               10,000+
             </div>
@@ -33,7 +33,7 @@ export function Numbers() {
           </div>
 
           {/* Success Rate Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center">
+          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-emerald-100/50 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
             <div className="text-4xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent mb-3">
               95%
             </div>
