@@ -56,7 +56,7 @@ def update_pinecone(filepath):
                 "location": item.get("location", "N/A"),
                 "description": item.get("description", "N/A"),
                 "causes": item.get("causes") or [],
-                "groups": item.get("groups") or [],
+                "goodFor": item.get("goodFor") or [],
                 "skills": item.get("skills") or [],
                 "missionStatement": item.get("missionStatement", "N/A"),
                 "organizationDescription": item.get("organizationDescription", "N/A"),
