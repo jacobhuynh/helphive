@@ -60,7 +60,9 @@ def update_pinecone(filepath):
                 "skills": item.get("skills") or [],
                 "missionStatement": item.get("missionStatement", "N/A"),
                 "organizationDescription": item.get("organizationDescription", "N/A"),
-                "url": item.get("url", "N/A")
+                "url": item.get("url", "N/A"),
+                "completed": False,
+                "hours": ""
             }
         })
         id_count += 1
