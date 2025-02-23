@@ -59,7 +59,8 @@ def update_pinecone(filepath):
                 "groups": item.get("groups") or [],
                 "skills": item.get("skills") or [],
                 "missionStatement": item.get("missionStatement", "N/A"),
-                "organizationDescription": item.get("organizationDescription", "N/A")
+                "organizationDescription": item.get("organizationDescription", "N/A"),
+                "url": item.get("url", "N/A")
             }
         })
         id_count += 1
