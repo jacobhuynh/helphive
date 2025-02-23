@@ -28,8 +28,9 @@ const Button = ({ className, variant = "default", size = "default", ...props }: 
     return <button className={`${baseStyles} ${variantStyles} ${sizeStyles} ${className}`} {...props} />;
 };
 
+// Update the Card component
 const Card = ({ className = "", children }: { className?: string; children: React.ReactNode }) => (
-    <div className={`rounded-lg border bg-white shadow-sm p-6 ${className}`}>
+    <div className={`rounded-lg border bg-white shadow-sm p-6 text-gray-900 ${className}`}>
         {children}
     </div>
 );
@@ -39,8 +40,11 @@ const CardHeader = ({ children }: { children: React.ReactNode }) => (
     <div className="flex flex-col space-y-1.5">{children}</div>
 );
 
+// Update the CardTitle component
 const CardTitle = ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-lg font-semibold leading-none tracking-tight">{children}</h3>
+    <h3 className="text-lg font-semibold leading-none tracking-tight text-gray-900">
+        {children}
+    </h3>
 );
 
 const CardContent = ({ className = "", children }: { className?: string; children: React.ReactNode }) => (
@@ -131,17 +135,17 @@ export default function Dashboard() {
     if (!currentOpportunity) return <div>No more opportunities to show!</div>;
 
     return (
-        <div>
-            <div className="container mx-auto p-4 md:p-6 lg:p-8 mt-48">
-                <div className="flex flex-col items-center space-y-6">
+        <div className="bg-white text-gray-900 min-h-screen">
+            <div className="container mx-auto p-4 md:p-6 lg:p-8">
+                <div className="flex flex-col items-center space-y-6 mt-16">
                     <Card className="w-full max-w-3xl">
                         <CardHeader>
                             <div className="space-y-4">
                                 <CardTitle>{currentOpportunity.metadata.title}</CardTitle>
-                                <div className="text-base text-gray-500">
+                                <div className="text-base text-gray-700">
                                     {currentOpportunity.metadata.organization}
                                 </div>
-                                <div className="flex items-center gap-2 text-gray-500">
+                                <div className="flex items-center gap-2 text-gray-700">
                                     <span className="h-4 w-4">📍</span>
                                     {currentOpportunity.metadata.location}
                                 </div>
@@ -151,7 +155,7 @@ export default function Dashboard() {
                             {/* ... rest of card content ... */}
                             <div className="space-y-2">
                                 <h3 className="font-semibold">Description</h3>
-                                <p className="text-gray-500">{currentOpportunity.metadata.description}</p>
+                                <p className="text-gray-800">{currentOpportunity.metadata.description}</p>
                             </div>
 
                             {/* Causes Section */}
