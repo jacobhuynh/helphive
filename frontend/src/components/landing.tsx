@@ -21,9 +21,11 @@ export function Landing() {
                 Set your preferences and get matched with meaningful causes to
                 make a difference in your community
               </p>
-              <button className="bg-green-500 text-white px-12 py-4 rounded-xl transition-colors font-bold hover:bg-green-600 hover:scale-105">
-                Join Us
-              </button>
+              <a href="/register">
+                <button className="bg-green-500 text-white px-12 py-4 rounded-xl transition-colors font-bold hover:bg-green-600 hover:scale-105">
+                  Join Us
+                </button>
+              </a>
             </div>
           </div>
         </div>
