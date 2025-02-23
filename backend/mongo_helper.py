@@ -1,7 +1,7 @@
 import gridfs
 from pinecone_helper import *
 
-def mongo_signup(db, first_name, last_name, username, password, email, location, causes, skills, group):
+def mongo_signup(db, first_name, last_name, username, password, email, location, causes, skills, groups):
     try:
         fs = gridfs.GridFS(db)
         
@@ -14,7 +14,7 @@ def mongo_signup(db, first_name, last_name, username, password, email, location,
             "location":location,
             "causes":causes,
             "skills":skills,
-            "group":group,
+            "groups":groups,
             "hours":0,
             "opportunities":[]
         }
