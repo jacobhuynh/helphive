@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 interface TagProps {
     text: string;
@@ -130,7 +131,11 @@ export default function Dashboard() {
         setI(prev => prev + 1);
     }
 
-    if (loading) return <div>Loading recommendations...</div>;
+    if (loading) return <div className="min-h-screen p-8 bg-white text-gray-900"> {/* Added text-gray-900 */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16" style={{ height: "75vh", display: "flex", justifyContent: 'center', justifyItems: "center", alignSelf: "center", alignItems: "center" }}>
+            <CircularProgress size="lg" color="success" />
+        </div>
+    </div>;
     if (error) return <div>Error loading recommendations: {error}</div>;
     if (!currentOpportunity) return <div>No more opportunities to show!</div>;
 

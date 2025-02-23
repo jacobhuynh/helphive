@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 export type Opportunity = {
     causes: string[];
@@ -85,12 +86,16 @@ export default function Dashboard() {
         );
     }
 
-    if (loading) return <div className="min-h-screen p-8">Loading...</div>;
+    if (loading) return <div className="min-h-screen p-8 bg-white text-gray-900"> {/* Added text-gray-900 */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16" style={{ height: "75vh", display: "flex", justifyContent: 'center', justifyItems: "center", alignSelf: "center", alignItems: "center" }}>
+            <CircularProgress size="lg" color="success" />
+        </div>
+    </div>;
     if (error) return <div className="min-h-screen p-8 text-red-500">{error}</div>;
 
     return (
         <div className="min-h-screen p-8 bg-white text-gray-900"> {/* Added text-gray-900 */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative mt-16">
                 {/* Active Opportunities */}
                 <div className="space-y-6 md:pr-12">
                     <h2 className="text-lg font-semibold mb-6 text-gray-900">Active</h2> {/* Added text color */}
