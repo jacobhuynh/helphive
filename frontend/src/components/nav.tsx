@@ -12,7 +12,6 @@ export function Nav() {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            {/* Mission Link with underline animation */}
             <div className="relative group">
               <Link
                 href="#mission"
@@ -22,7 +21,6 @@ export function Nav() {
               </Link>
               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
             </div>
-            {/* About Us Link with underline animation */}
             <div className="relative group">
               <Link
                 href="#about"
@@ -32,7 +30,6 @@ export function Nav() {
               </Link>
               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
             </div>
-            {/* Contact Us Link with underline animation */}
             <div className="relative group">
               <Link
                 href="#contact"
@@ -43,7 +40,6 @@ export function Nav() {
               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
             </div>
           </div>
-          {/* Sign In button with different hover shade and scale animation */}
           <Link
             href="#"
             className="bg-green-500 text-white px-6 py-2 rounded-lg font-bold transition-transform transform hover:bg-green-600 hover:scale-105"
