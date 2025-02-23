@@ -82,8 +82,8 @@ def pinecone_get_matches(json_data):
     if json_data['skills']:
         for skill in json_data['skills']:
             data.append(skill)
-    if json_data['groups']:
-        for group in json_data['groups']:
+    if json_data['goodFor']:
+        for group in json_data['goodFor']:
             data.append(group)
     
     data_string = ", ".join(data)
