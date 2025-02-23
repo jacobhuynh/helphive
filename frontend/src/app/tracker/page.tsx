@@ -1,133 +1,183 @@
-"use client"
+"use client";
+import { useEffect, useState } from "react";
 
-import { useState } from "react"
-
-interface TrackerItem {
-  id: number
-  title: string
-  location: string
-  causes: string
-  hours: string
-  completed: boolean
+export type Opportunity = {
+    causes: string[];
+    description: string;
+    goodFor: string[];
+    id: string;
+    location: string;
+    missionStatement: string;
+    organization: string;
+    organizationDescription: string;
+    skills: string[];
+    title: string;
+    url: string;
+    hours: string;
+    completed: boolean;
 }
 
-export default function Tracker() {
-  const [items, setItems] = useState<TrackerItem[]>([
-    {
-      id: 1,
-      title: "Community Garden",
-      location: "Central Park",
-      causes: "Environment",
-      hours: "",
-      completed: false,
-    },
-    {
-      id: 2,
-      title: "Food Bank",
-      location: "Downtown",
-      causes: "Hunger Relief",
-      hours: "",
-      completed: false,
-    },
-    {
-      id: 3,
-      title: "Animal Shelter",
-      location: "West Side",
-      causes: "Animal Welfare",
-      hours: "",
-      completed: false,
-    },
-  ])
+export default function Dashboard() {
+    const [interestedOpportunities, setInterestedOpportunities] = useState<Opportunity[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
 
-  const handleComplete = (id: number) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, completed: true } : item)))
-  }
+    useEffect(() => {
+        const storedEmail = localStorage.getItem("userEmail") || "";
+        setEmail(storedEmail);
 
-  const handleHoursChange = (id: number, hours: string) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, hours } : item)))
-  }
+        const fetchData = async (userEmail: string) => { // Fixed type to string only
+            try {
+                const encodedEmail = encodeURIComponent(userEmail);
+                const response = await fetch(
+                    `http://127.0.0.1:8000/get_user/${encodedEmail}`
+                );
+                if (!response.ok) throw new Error("Network response was not ok");
+                const result = await response.json();
+                setInterestedOpportunities(result.opportunities);
+            } catch (error) {
+                console.error(error);
+                setError("Failed to load opportunities");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative">
-        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-300" />
+        if (storedEmail) {
+            fetchData(storedEmail);
+        }
+    }, []);
 
-        <div className="space-y-6 md:pr-12">
-          <h2 className="text-lg font-semibold mb-6">Active</h2>
-          {items
-            .filter((item) => !item.completed)
-            .map((item) => (
-              <div
-                key={item.id}
-                className="p-6 rounded-lg border bg-white shadow-md"
-              >
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-medium text-lg">{item.title}</h3>
-                    <p className="text-sm text-gray-500">{item.location}</p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600">Causes:</span>
-                      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700">
-                        {item.causes}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-32">
-                        <label htmlFor={`hours-${item.id}`} className="sr-only">
-                          Hours
-                        </label>
-                        <input
-                          id={`hours-${item.id}`}
-                          type="number"
-                          placeholder="Hours"
-                          value={item.hours}
-                          onChange={(e) => handleHoursChange(item.id, e.target.value)}
-                          className="w-full px-3 py-2 border rounded-md"
-                        />
-                      </div>
-                      <button
-                        onClick={() => handleComplete(item.id)}
-                        className="ml-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-                      >
-                        Complete
-                      </button>
-                    </div>
-                  </div>
+    async function addHours(id: string, hours: string) { // Modified to accept ID and hours
+        try {
+            const numericHours = parseInt(hours, 10) || 0;
+            await fetch(`http://127.0.0.1:8000/update_hours/${encodeURIComponent(email)}?hours=${numericHours}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+        } catch (error) {
+            console.error("Error updating hours:", error);
+        }
+    }
+
+    const handleComplete = async (id: string) => { // Made async
+        const opportunity = interestedOpportunities.find(item => item.id === id);
+        if (opportunity) {
+            try {
+                await addHours(id, opportunity.hours);
+                setInterestedOpportunities(prev =>
+                    prev.map(item =>
+                        item.id === id ? { ...item, completed: true } : item
+                    )
+                );
+            } catch (error) {
+                console.error("Error completing opportunity:", error);
+            }
+        }
+    }
+
+    const handleHoursChange = (id: string, hours: string) => { // Fixed type to string
+        setInterestedOpportunities(prev =>
+            prev.map(item =>
+                item.id === id ? { ...item, hours } : item
+            )
+        );
+    }
+
+    if (loading) return <div className="min-h-screen p-8">Loading...</div>;
+    if (error) return <div className="min-h-screen p-8 text-red-500">{error}</div>;
+
+    return (
+        <div className="min-h-screen p-8 bg-white text-gray-900"> {/* Added text-gray-900 */}
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                {/* Active Opportunities */}
+                <div className="space-y-6 md:pr-12">
+                    <h2 className="text-lg font-semibold mb-6 text-gray-900">Active</h2> {/* Added text color */}
+                    {interestedOpportunities
+                        .filter(item => !item.completed)
+                        .map(item => (
+                            <div
+                                key={item.id}
+                                className="p-6 rounded-lg border bg-white shadow-md space-y-4"
+                            >
+                                <div>
+                                    <h3 className="font-medium text-lg text-gray-900">{item.title}</h3> {/* Dark text */}
+                                    <p className="text-sm text-gray-700">{item.location}</p> {/* Darker gray */}
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm text-gray-600">Causes:</span>
+                                        <div className="flex flex-wrap gap-2">
+                                            {item.causes.map((cause, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700"
+                                                >
+                                                    {cause}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-32">
+                                            <input
+                                                id={`hours-${item.id}`}
+                                                type="number"
+                                                placeholder="Hours"
+                                                value={item.hours}
+                                                onChange={(e) => handleHoursChange(item.id, e.target.value)}
+                                                className="w-full px-3 py-2 border rounded-md"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() => handleComplete(item.id)}
+                                            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                                        >
+                                            Complete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                 </div>
-              </div>
-            ))}
-        </div>
 
-        <div className="space-y-6 md:pl-12">
-          <h2 className="text-lg font-semibold mb-6">Completed</h2>
-          {items
-            .filter((item) => item.completed)
-            .map((item) => (
-              <div key={item.id} className="p-6 rounded-lg border bg-gray-100">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-medium text-lg">{item.title}</h3>
-                    <p className="text-sm">{item.location}</p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">Causes:</span>
-                      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700">
-                        {item.causes}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">Hours:</span>
-                      <span className="text-sm">{item.hours}</span>
-                    </div>
-                  </div>
+                <div className="space-y-6 md:pl-12">
+                    <h2 className="text-lg font-semibold mb-6 text-gray-900">Completed</h2> {/* Added text color */}
+                    {interestedOpportunities
+                        .filter(item => item.completed)
+                        .map(item => (
+                            <div
+                                key={item.id}
+                                className="p-6 rounded-lg border bg-gray-50 space-y-4"
+                            >
+                                <div>
+                                    <h3 className="font-medium text-lg text-gray-900">{item.title}</h3> {/* Dark text */}
+                                    <p className="text-sm text-gray-700">{item.location}</p> {/* Darker gray */}
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm text-gray-600">Causes:</span>
+                                        <div className="flex flex-wrap gap-2">
+                                            {item.causes.map((cause, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700"
+                                                >
+                                                    {cause}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm text-gray-600">Hours:</span>
+                                        <span className="text-sm">{item.hours}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                 </div>
-              </div>
-            ))}
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    );
 }
