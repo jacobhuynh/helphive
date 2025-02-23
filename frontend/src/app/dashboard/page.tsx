@@ -146,7 +146,7 @@ export default function Dashboard() {
                                     {currentOpportunity.metadata.organization}
                                 </div>
                                 <div className="flex items-center gap-2 text-gray-700">
-                                    <span className="h-4 w-4">📍</span>
+                                    <span className="h-7 w-4">📍</span>
                                     {currentOpportunity.metadata.location}
                                 </div>
                             </div>
