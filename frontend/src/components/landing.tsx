@@ -7,12 +7,11 @@ export function Landing() {
   return (
     <div className="h-screen relative">
       <div className="fixed inset-0 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 -z-10" />
-
       <main className="relative min-h-screen flex items-center">
         <div className="container mx-auto px-16">
           <div className="relative z-10">
             <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
                 Volunteering Opportunities That Match{" "}
                 <span className="bg-gradient-to-r from-green-600 via-emerald-500 to-emerald-400 bg-clip-text text-transparent">
                   Your Passion
@@ -32,16 +31,16 @@ export function Landing() {
           <div className="absolute bottom-0 right-0 w-full h-[100vh] transform -skew-y-[18deg] origin-bottom-right">
             <Image
               src={Hill}
-              alt="Green landscape"
+              alt="Hill"
               fill
               className="object-cover"
               priority
             />
           </div>
-          <div className="absolute top-1/2 right-[5%] -translate-y-1/2 w-[500px] h-[500px]">
+          <div className="absolute top-1/2 right-[8%] -translate-y-1/2 w-[500px] h-[500px] mb-12">
             <Image
               src={Bee}
-              alt="Cute bee"
+              alt="Bee"
               fill
               className="object-contain"
               priority
