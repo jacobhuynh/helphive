@@ -33,7 +33,7 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="mx-auto p-6 bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 min-h-screen px-36">
       <h2 className="text-3xl font-bold text-center mb-8">Leaderboard</h2>
 
       {/* Top 3 Podium Display */}
@@ -57,7 +57,7 @@ export default function Leaderboard() {
       </div>
 
       {/* Leaderboard Table */}
-      <div className="bg-gradient-to-br from-yellow-100 via-green-50 to-emerald-300 shadow-lg rounded-lg p-6">
+      <div className=" shadow-lg rounded-lg p-6">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b-2">

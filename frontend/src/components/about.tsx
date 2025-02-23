@@ -45,9 +45,9 @@ export function About() {
               <div className="bg-gradient-to-br from-yellow-50 to-green-50 rounded-xl p-6 border border-emerald-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
                 <div className="flex items-center gap-2 text-green-600 mb-2">
                   <Leaf className="w-6 h-6" />
-                  <span className="text-3xl font-bold">5+</span>
+                  <span className="text-3xl font-bold">15+</span>
                 </div>
-                <p className="text-gray-600 text-sm">Years Active</p>
+                <p className="text-gray-600 text-sm">Causes Supported</p>
               </div>
 
               <div className="bg-gradient-to-br from-yellow-50 to-green-50 rounded-xl p-6 border border-emerald-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-300">
